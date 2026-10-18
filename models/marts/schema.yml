@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact model containing one row per order, customer and product details, and order revenue."
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Identifier of the customer who placed the order."
+        data_tests:
+          - not_null
+
+      - name: product_id
+        description: "Identifier of the ordered product."
+        data_tests:
+          - not_null
+
+      - name: order_revenue
+        description: "Revenue from completed orders; other statuses contribute zero."
+        data_tests:
+          - not_null
+
+  - name: mart_customer_summary
+    description: "Customer-level summary of order counts and spending."
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier."
+        data_tests:
+          - not_null
+
+      - name: total_orders
+        description: "Count of valid orders for each customer."
+
+      - name: total_spending
+        description: "Total revenue from completed orders for each customer."
+
+  - name: mart_category_sales
+    description: "Order counts and completed-order revenue aggregated by product category."
+    columns:
+      - name: category
+        description: "Product category."
+
+      - name: total_orders
+        description: "Number of distinct orders in the category."
+
+      - name: total_revenue
+        description: "Total revenue from completed orders in the category."

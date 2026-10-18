@@ -1,0 +1,90 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Cleaned customer data"
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_name
+        description: "Customer full name"
+
+      - name: email
+        description: "Customer email address"
+
+      - name: city
+        description: "Customer city"
+
+      - name: signup_date
+        description: "Date the customer signed up"
+
+  - name: stg_products
+    description: "Cleaned product data"
+    columns:
+      - name: product_id
+        description: "Unique product identifier"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: product_name
+        description: "Product name"
+
+      - name: category
+        description: "Product category"
+
+      - name: price
+        description: "Product price"
+        data_tests:
+          - not_null
+
+  - name: stg_orders
+    description: "Cleaned order data"
+    columns:
+      - name: order_id
+        description: "Unique order identifier"
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Customer who placed the order"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+
+      - name: product_id
+        description: "Product included in the order"
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_products')
+                field: product_id
+
+      - name: quantity
+        description: "Quantity ordered"
+        data_tests:
+          - not_null
+
+      - name: order_date
+        description: "Date the order was placed"
+
+      - name: order_status
+        description: "Standardized order status"
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                  - completed
+                  - pending
+                  - cancelled
+                  - shipped

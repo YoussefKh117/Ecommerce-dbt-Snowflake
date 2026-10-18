@@ -1,0 +1,55 @@
+
+version: 2
+
+models:
+  - name: int_orders_enriched
+    description: "Orders enriched with customer and product details, including revenue calculated for completed orders only."
+
+    columns:
+      - name: order_id
+        description: "Unique identifier for each order."
+        data_tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        description: "Identifier of the customer who placed the order."
+        data_tests:
+          - not_null
+
+      - name: customer_name
+        description: "Name of the customer."
+
+      - name: email
+        description: "Email address of the customer."
+
+      - name: city
+        description: "Customer's city."
+
+      - name: product_id
+        description: "Identifier of the ordered product."
+        data_tests:
+          - not_null
+
+      - name: product_name
+        description: "Name of the ordered product."
+
+      - name: category
+        description: "Category of the ordered product."
+
+      - name: price
+        description: "Price per unit of the product."
+
+      - name: quantity
+        description: "Number of units ordered."
+
+      - name: order_date
+        description: "Date the order was placed."
+
+      - name: order_status
+        description: "Standardized status of the order."
+
+      - name: order_revenue
+        description: "Revenue for completed orders; zero for other order statuses."
+        data_tests:
+          - not_null
